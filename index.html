@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J&T Ks_Tubun - Portal Foto & Link Uploader</title>
+  <meta name="description" content="Portal Penggabung Foto Paket Multi-Slide & Upload Link Gambar Online J&T Ks_Tubun">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Dark Header Card Banner -->
+  <header class="top-header-banner">
+    <div class="header-banner-content">
+      <div class="jt-logo-badge" onclick="switchView('dashboard')">
+        <div class="jt-logo-pill">
+          <span class="jt-red-txt">J&T</span>
+          <span class="jt-sub-txt">EXPRESS</span>
+        </div>
+      </div>
+      <h1 class="header-app-title">J&T Ks_Tubun</h1>
+      
+      <!-- Live Real-Time WITA Clock Badge -->
+      <div class="header-clock-pill">
+        <i class="fa-solid fa-clock text-red-glow"></i>
+        <span id="header-clock-text">Minggu, 23 Agustus 2026 • 16:58:18 WITA</span>
+      </div>
+      
+      <div class="header-action-row">
+        <button id="theme-toggle-btn" class="header-theme-btn" onclick="toggleThemeMode()" title="Ubah Mode Gelap / Terang">
+          <i class="fa-solid fa-moon"></i>
+          <span id="theme-btn-text">Mode Gelap</span>
+        </button>
+
+        <button class="header-dash-btn" onclick="switchView('dashboard')">
+          <i class="fa-solid fa-house"></i>
+          <span>Dashboard</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- VIEW 1: DASHBOARD UTAMA (HOME) -->
+    <section id="dashboard-view" class="view-section active">
+      
+      <!-- Hero Section -->
+      <div class="dashboard-hero">
+        <h1 class="dashboard-main-title">Selamat Datang di Portal Foto<br>J&T Ks_Tubun</h1>
+        <p class="dashboard-main-subtitle">Solusi Cepat, Modern & Praktis. Slide dan Upload Link</p>
+        <div class="dash-op-badge">
+          <i class="fa-solid fa-bolt"></i> Operational Tools J&T Express Ks_Tubun
+        </div>
+      </div>
+
+      <!-- 2 Main Service Cards (Matching Screenshot Layout) -->
+      <div class="dashboard-cards-container">
+        
+        <!-- CARD 1: GABUNG FOTO MULTI-SLIDE -->
+        <div class="service-card-v2 card-red-theme" onclick="switchView('merge')">
+          <div class="card-glow-bg glow-red-bg"></div>
+          <div class="card-v2-header">
+            <div class="card-v2-icon icon-red">
+              <i class="fa-solid fa-images"></i>
+            </div>
+            <h2 class="card-v2-title">Gabung Foto Multi-Slide</h2>
+            <p class="card-v2-desc">
+              Gabungkan hingga 5 foto paket per slide secara instan. Pilih tata letak presisi dengan watermark J&T & stempel waktu.
+            </p>
+            <div class="card-v2-tags">
+              <span class="v2-tag tag-red">Maks 5 Foto</span>
+              <span class="v2-tag tag-glass">Multi-Slide</span>
+            </div>
+          </div>
+
+          <div class="card-v2-preview-box">
+            <i class="fa-solid fa-image placeholder-icon"></i>
+          </div>
+
+          <button class="v2-action-btn btn-red-pill">
+            Buka Fitur Gabung Foto
+          </button>
+        </div>
+
+        <!-- CARD 2: UPLOAD FOTO JADI LINK ONLINE -->
+        <div class="service-card-v2 card-blue-theme" onclick="switchView('upload')">
+          <div class="card-glow-bg glow-blue-bg"></div>
+          <div class="card-v2-header">
+            <div class="card-v2-icon icon-blue">
+              <i class="fa-solid fa-link"></i>
+            </div>
+            <h2 class="card-v2-title">Upload Foto Jadi Link Online</h2>
+            <p class="card-v2-desc">
+              Unggah foto paket atau langsung tempel screenshot dari clipboard (<kbd>Ctrl + V</kbd>) untuk menghasilkan link online publik yang langsung dapat dibuka siapa saja.
+            </p>
+            <div class="card-v2-tags">
+              <span class="v2-tag tag-blue">Cloud Storage</span>
+              <span class="v2-tag tag-glass">Clipboard Ctrl+V</span>
+            </div>
+          </div>
+
+          <div class="card-v2-preview-box blue-preview-box">
+            <i class="fa-solid fa-cloud-arrow-up placeholder-icon text-blue"></i>
+          </div>
+
+          <button class="v2-action-btn btn-blue-pill">
+            Buka Fitur Upload Link
+          </button>
+        </div>
+
+        <!-- CARD 3: TEMPLATE KERJA OPERASIONAL (PTMP) -->
+        <div class="service-card-v2 card-green-theme" onclick="switchView('template')">
+          <div class="card-glow-bg glow-green-bg"></div>
+          <div class="card-v2-header">
+            <div class="card-v2-icon icon-green">
+              <i class="fa-solid fa-file-signature"></i>
+            </div>
+            <h2 class="card-v2-title">Template Kerja (PTMP & Konfirmasi)</h2>
+            <p class="card-v2-desc">
+              Buat pesan otomatis konfirmasi PTMP (Penerima Tidak Menerima Paket) dengan logika waktu pintar (hari ini, kemarin, dsb) & salin/kirim ke WhatsApp instan.
+            </p>
+            <div class="card-v2-tags">
+              <span class="v2-tag tag-green">Logika Waktu Pintar</span>
+              <span class="v2-tag tag-glass">Auto WA Chat</span>
+            </div>
+          </div>
+
+          <div class="card-v2-preview-box green-preview-box">
+            <i class="fa-solid fa-paper-plane placeholder-icon text-green"></i>
+          </div>
+
+          <button class="v2-action-btn btn-green-pill">
+            Buka Template Kerja
+          </button>
+        </div>
+
+      </div>
+
+      <!-- 4 Quick Highlight Feature Cards (Bottom Grid) -->
+      <div class="bottom-features-grid">
+        <div class="feature-card-v2">
+          <div class="f-v2-icon"><i class="fa-solid fa-table-cells-large"></i></div>
+          <p class="f-v2-text">Layout Presisi<br>4 Variasi</p>
+        </div>
+        <div class="feature-card-v2">
+          <div class="f-v2-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <p class="f-v2-text">Stempel Waktu<br>WIB/WITA/WIT</p>
+        </div>
+        <div class="feature-card-v2">
+          <div class="f-v2-icon"><i class="fa-solid fa-file-zipper"></i></div>
+          <p class="f-v2-text">Batch ZIP<br>Exporter</p>
+        </div>
+        <div class="feature-card-v2">
+          <div class="f-v2-icon"><i class="fa-solid fa-paste"></i></div>
+          <p class="f-v2-text">Universal<br>Clipboard Paste</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- VIEW 2: FITUR GABUNG FOTO MULTI-SLIDE -->
+    <section id="merge-view" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2 class="section-title"><i class="fa-solid fa-layer-group text-red"></i> Penggabung Foto Multi-Slide</h2>
+          <p class="section-subtitle">Buat kolase foto paket presisi tinggi dengan stempel waktu dan watermark resmi.</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-secondary" onclick="addNewSlide()">
+            <i class="fa-solid fa-plus"></i> Tambah Slide Baru
+          </button>
+          <button class="btn btn-primary-red" onclick="downloadAllSlidesZip()">
+            <i class="fa-solid fa-file-zipper"></i> Unduh Semua Slide (ZIP)
+          </button>
+        </div>
+      </div>
+
+      <div class="merge-layout-grid">
+        
+        <!-- SIDE CONTROL PANEL (LEFT COLUMN) -->
+        <aside class="control-panel glass-panel">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-sliders"></i> Pengaturan Global Canvas</h3>
+            <span class="badge-pill badge-glass">Side Control</span>
+          </div>
+
+          <div class="panel-body">
+            <!-- Output Format & Quality -->
+            <div class="control-group">
+              <label class="control-label">Format Output</label>
+              <div class="button-group-toggle">
+                <button id="fmt-jpg" class="toggle-btn active" onclick="setExportFormat('jpg')">JPG / JPEG</button>
+                <button id="fmt-png" class="toggle-btn" onclick="setExportFormat('png')">PNG</button>
+              </div>
+            </div>
+
+            <div id="quality-slider-group" class="control-group">
+              <div class="label-with-value">
+                <label for="jpg-quality">Kualitas JPG</label>
+                <span id="jpg-quality-val" class="val-badge">90%</span>
+              </div>
+              <input type="range" id="jpg-quality" min="50" max="100" value="90" oninput="updateGlobalConfig()">
+            </div>
+
+            <!-- Resolution -->
+            <div class="control-group">
+              <label for="canvas-resolution" class="control-label">Maksimal Resolusi Canvas</label>
+              <select id="canvas-resolution" class="form-select" onchange="updateGlobalConfig()">
+                <option value="1200">Standard (1200px Width)</option>
+                <option value="1920" selected>High Full HD (1920px Width)</option>
+                <option value="3840">Ultra 4K (3840px Width)</option>
+              </select>
+            </div>
+
+            <!-- Aspect Ratio -->
+            <div class="control-group">
+              <label for="aspect-ratio" class="control-label">Rasio Aspek Canvas</label>
+              <select id="aspect-ratio" class="form-select" onchange="updateGlobalConfig()">
+                <option value="auto" selected>Otomatis (Fit Isi Foto)</option>
+                <option value="1:1">1:1 (Square)</option>
+                <option value="4:3">4:3 (Standard)</option>
+                <option value="16:9">16:9 (Landscape)</option>
+                <option value="9:16">9:16 (Portrait Story)</option>
+              </select>
+            </div>
+
+            <hr class="panel-divider">
+
+            <!-- Visual Controls (Gap, Margin, Radius) -->
+            <div class="control-group">
+              <div class="label-with-value">
+                <label for="gap-size">Jarak Foto (Gap)</label>
+                <span id="gap-size-val" class="val-badge">12px</span>
+              </div>
+              <input type="range" id="gap-size" min="0" max="40" value="12" oninput="updateGlobalConfig()">
+            </div>
+
+            <div class="control-group">
+              <div class="label-with-value">
+                <label for="border-margin">Margin Kanvas</label>
+                <span id="border-margin-val" class="val-badge">16px</span>
+              </div>
+              <input type="range" id="border-margin" min="0" max="50" value="16" oninput="updateGlobalConfig()">
+            </div>
+
+            <div class="control-group">
+              <div class="label-with-value">
+                <label for="border-radius">Radius Lengkung Foto</label>
+                <span id="border-radius-val" class="val-badge">8px</span>
+              </div>
+              <input type="range" id="border-radius" min="0" max="30" value="8" oninput="updateGlobalConfig()">
+            </div>
+
+            <!-- Background Color -->
+            <div class="control-group">
+              <label class="control-label">Warna Background Canvas</label>
+              <div class="bg-color-presets">
+                <button class="color-preset-btn bg-white active" title="Putih" onclick="setBackgroundColor('#ffffff', this)"></button>
+                <button class="color-preset-btn bg-dark" title="Gelap (#12141d)" onclick="setBackgroundColor('#12141d', this)"></button>
+                <button class="color-preset-btn bg-jt-red" title="Merah J&T (#e60012)" onclick="setBackgroundColor('#e60012', this)"></button>
+                <button class="color-preset-btn bg-transparent-pattern" title="Transparan" onclick="setBackgroundColor('transparent', this)"></button>
+                <div class="color-picker-wrap" title="Custom Warna">
+                  <input type="color" id="custom-bg-color" value="#ffffff" onchange="setCustomBgColor(this.value)">
+                </div>
+              </div>
+            </div>
+
+            <hr class="panel-divider">
+
+            <!-- Branding Watermark & Timestamp -->
+            <div class="control-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="enable-watermark" checked onchange="updateGlobalConfig()">
+                <span class="custom-checkbox"></span>
+                <span>Watermark Logo "J&T Ks_Tubun"</span>
+              </label>
+            </div>
+
+            <div class="control-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="enable-timestamp" checked onchange="updateGlobalConfig()">
+                <span class="custom-checkbox"></span>
+                <span>Stempel Tanggal & Waktu</span>
+              </label>
+            </div>
+
+            <div id="timezone-group" class="control-group">
+              <label for="timezone-select" class="control-label">Zona Waktu Stempel</label>
+              <select id="timezone-select" class="form-select" onchange="updateGlobalConfig()">
+                <option value="WIB" selected>WIB (Waktu Indonesia Barat / UTC+7)</option>
+                <option value="WITA">WITA (Waktu Indonesia Tengah / UTC+8)</option>
+                <option value="WIT">WIT (Waktu Indonesia Timur / UTC+9)</option>
+              </select>
+            </div>
+
+            <hr class="panel-divider">
+
+            <!-- Cloud Image Hosting Config -->
+            <div class="control-group">
+              <label for="imgbb-api-key" class="control-label">
+                <i class="fa-solid fa-cloud"></i> ImgBB API Key (Gratis Cloud Upload)
+              </label>
+              <input type="text" id="imgbb-api-key" class="slide-title-input" placeholder="Opsional (misal: 6d207e...)" onchange="updateGlobalConfig()" style="width:100%; font-size:0.8rem;">
+              <small style="color:var(--text-muted); font-size:0.72rem; display:block; margin-top:4px;">
+                Dapatkan key gratis di <a href="https://api.imgbb.com/" target="_blank" style="color:var(--accent-blue-hover);">api.imgbb.com</a> agar foto online selamanya.
+              </small>
+            </div>
+
+            <!-- Action Buttons: Save Preference & Reset -->
+            <div class="preference-actions">
+              <button class="btn btn-outline-glass" onclick="savePreferences()">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan Preference
+              </button>
+              <button class="btn btn-outline-danger" onclick="resetPreferences()">
+                <i class="fa-solid fa-rotate-left"></i> Reset Default
+              </button>
+            </div>
+
+          </div>
+        </aside>
+
+        <!-- SLIDES CONTAINER (RIGHT COLUMN) -->
+        <div class="slides-container-wrap">
+          <div id="slides-list" class="slides-list">
+            <!-- Dynamic Slide Cards generated by app.js -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 3: FITUR UPLOAD FOTO JADI LINK ONLINE -->
+    <section id="upload-view" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2 class="section-title"><i class="fa-solid fa-cloud-arrow-up text-blue"></i> Upload Foto Jadi Link Online Publik</h2>
+          <p class="section-subtitle">Dapatkan link online publik yang langsung dapat dibuka siapa saja untuk foto paket atau hasil screenshot clipboard (<kbd>Ctrl + V</kbd>).</p>
+        </div>
+      </div>
+
+      <div class="upload-container">
+        
+        <!-- DROPZONE AREA -->
+        <div id="upload-dropzone" class="upload-dropzone glass-panel">
+          <input type="file" id="file-uploader-input" accept="image/*" multiple onchange="handleFileSelect(event)">
+          <div class="dropzone-content">
+            <div class="dropzone-icon">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <h3 class="dropzone-title">Tarik & Lepas Foto di Sini, atau <span class="text-blue">Pilih File</span></h3>
+            <p class="dropzone-subtitle">Mendukung format JPG, PNG, WEBP, GIF (Maks 10MB)</p>
+            
+            <div class="clipboard-banner">
+              <i class="fa-solid fa-keyboard text-yellow"></i>
+              <span>Fitur Pintar: Tekan <kbd>Ctrl + V</kbd> di mana saja untuk upload screenshot clipboard!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPLOAD RESULT CARD (DYNAMIC) -->
+        <div id="upload-result-card" class="upload-result-card glass-panel hidden">
+          <div class="result-header">
+            <div class="result-badge"><i class="fa-solid fa-circle-check text-green"></i> Berhasil Diunggah Online Publik</div>
+            <span class="upload-time-stamp" id="result-timestamp">Baru Saja</span>
+          </div>
+
+          <div class="result-body">
+            <div class="result-thumbnail-wrap">
+              <img id="result-thumb" src="" alt="Uploaded Image Preview">
+            </div>
+            
+            <div class="result-details">
+              <h4 id="result-filename" class="result-filename">paket_resi_screenshot.png</h4>
+              <p id="result-filemeta" class="result-meta">1920 x 1080 px • 450 KB</p>
+
+              <div class="shortlink-box">
+                <label class="control-label">Link Online Publik (Bisa Di-akses Siapa Saja):</label>
+                <div class="input-with-button">
+                  <input type="text" id="shortlink-url-input" readonly value="https://tmpfiles.org/dl/sample.jpg">
+                  <button id="btn-copy-shortlink" class="btn btn-primary-blue" onclick="copyShortlinkFromInput()">
+                    <i class="fa-solid fa-copy"></i> Salin Link
+                  </button>
+                  <button id="btn-wa-share-upload" class="btn btn-whatsapp" onclick="shareUploadResultToWhatsApp()">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                  </button>
+                  <a id="btn-open-tab" href="#" target="_blank" class="btn btn-secondary">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT UPLOADS HISTORY -->
+        <div class="history-section glass-panel">
+          <div class="history-header">
+            <h3><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Upload Terbaru (10 Terakhir)</h3>
+            <button class="btn btn-sm btn-outline-danger" onclick="clearUploadHistory()">
+              <i class="fa-solid fa-trash"></i> Bersihkan Riwayat
+            </button>
+          </div>
+
+          <div id="history-list" class="history-list">
+            <!-- Dynamic history items rendered by app.js -->
+            <div class="empty-history">
+              <i class="fa-solid fa-folder-open"></i>
+              <p>Belum ada riwayat unggahan foto. Unggah foto atau gunakan Ctrl+V untuk memulai.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 4: TEMPLATE KERJA OTOMATIS (PTMP & KELOLA PESAN) -->
+    <section id="template-view" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2 class="section-title"><i class="fa-solid fa-file-signature text-red"></i> Template Kerja Operasional J&T Ks_Tubun</h2>
+          <p class="section-subtitle">Buat pesan konfirmasi otomatis untuk customer dengan logika waktu pintar (hari ini, kemarin, dsb) dan kirim ke WhatsApp secara instan.</p>
+        </div>
+      </div>
+
+      <!-- TEMPLATE SELECTOR TABS -->
+      <div class="template-selector-tabs">
+        <button id="tab-ptmp" class="template-tab-btn active" onclick="switchSubTemplate('ptmp')">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+          <span>1. PTMP Standard</span>
+        </button>
+        <button id="tab-returan" class="template-tab-btn" onclick="switchSubTemplate('returan')">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span>2. PTMP Returan</span>
+        </button>
+        <button class="template-tab-btn disabled-tab" title="Segera Hadir">
+          <i class="fa-solid fa-hands-praying"></i>
+          <span>3. Permintaan Maaf (Segera Hadir)</span>
+        </button>
+      </div>
+
+      <!-- SUBTEMPLATE 1: PTMP STANDARD -->
+      <div id="subtemplate-ptmp" class="template-container-grid">
+        
+        <!-- LEFT COLUMN: FORM INPUT PTMP STANDARD -->
+        <div class="template-form-panel glass-panel">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-sliders text-red"></i> Form Isian Konfirmasi PTMP Standard</h3>
+            <span class="tag-badge-pill">Template #1</span>
+          </div>
+
+          <form id="ptmp-form" onsubmit="event.preventDefault(); updatePTMPPreview();">
+            
+            <!-- Branch Name Field -->
+            <div class="control-group" style="margin-bottom: 14px;">
+              <label class="control-label">
+                <i class="fa-solid fa-building-flag text-red"></i> Nama Cabang J&T
+                <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save HP/PC</span>
+              </label>
+              <input type="text" id="ptmp-branch-name" class="slide-title-input" placeholder="misal: KS Tubun" value="KS Tubun" oninput="syncBranchName('ptmp'); updatePTMPPreview();">
+            </div>
+
+            <!-- Admin/Kurir Selection & Staff Name -->
+            <div class="form-row-2">
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-user-shield"></i> Peran (Admin/Kurir)</label>
+                <select id="ptmp-role" class="form-select" onchange="updatePTMPPreview()">
+                  <option value="Admin" selected>Admin</option>
+                  <option value="Kurir">Kurir</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label class="control-label">
+                  <i class="fa-solid fa-id-badge"></i> Nama Admin/Kurir
+                  <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save</span>
+                </label>
+                <input type="text" id="ptmp-staff-name" class="slide-title-input" placeholder="misal: Imam" value="Imam" oninput="saveUserPreferences(); updatePTMPPreview();">
+              </div>
+            </div>
+
+            <!-- Customer Name & Phone -->
+            <div class="form-row-2">
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-user"></i> Nama Customer</label>
+                <input type="text" id="ptmp-customer-name" class="slide-title-input" placeholder="misal: Budi Santoso" value="Budi Santoso" oninput="updatePTMPPreview()">
+              </div>
+              <div class="control-group">
+                <label class="control-label"><i class="fa-brands fa-whatsapp text-green"></i> No. WA Customer (Opsional)</label>
+                <input type="tel" id="ptmp-customer-phone" class="slide-title-input" placeholder="misal: 081234567890" oninput="updatePTMPPreview()">
+              </div>
+            </div>
+
+            <!-- Resi & Location -->
+            <div class="form-row-2">
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-barcode"></i> Nomor Resi Paket</label>
+                <input type="text" id="ptmp-resi" class="slide-title-input" placeholder="misal: JX123456789" value="JX123456789" oninput="updatePTMPPreview()">
+              </div>
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-location-dot"></i> Lokasi/Alamat Salah Antar</label>
+                <input type="text" id="ptmp-wrong-address" class="slide-title-input" placeholder="misal: Gg. Melati No. 10" value="Gg. Melati No. 10" oninput="updatePTMPPreview()">
+              </div>
+            </div>
+
+            <!-- Date & Time & Timezone -->
+            <div class="form-row-3">
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-calendar-day"></i> Tgl. Pengantaran Benar</label>
+                <input type="date" id="ptmp-date" class="slide-title-input" onchange="updatePTMPPreview()">
+              </div>
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-clock"></i> Jam Pengantaran</label>
+                <input type="time" id="ptmp-time" class="slide-title-input" onchange="updatePTMPPreview()">
+              </div>
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-globe"></i> Zona Waktu</label>
+                <select id="ptmp-tz" class="form-select" onchange="updatePTMPPreview()">
+                  <option value="WITA" selected>WITA (Tengah)</option>
+                  <option value="WIB">WIB (Barat)</option>
+                  <option value="WIT">WIT (Timur)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="ptmp-action-row" style="margin-top: 16px;">
+              <button type="button" class="btn btn-primary-red" style="width:100%;" onclick="updatePTMPPreview(true)">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> ⚡ Buat Pesan Otomatis
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- RIGHT COLUMN: LIVE PREVIEW & COPY/SHARE ACTIONS -->
+        <div class="template-preview-panel glass-panel">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-eye text-blue"></i> PREVIEW PESAN OTOMATIS</h3>
+            <span class="preview-status-pill"><i class="fa-solid fa-circle-check text-green"></i> Siap Kirim</span>
+          </div>
+
+          <div class="message-preview-textarea-wrap">
+            <textarea id="ptmp-output-text" class="ptmp-textarea" readonly rows="10" placeholder="Pesan otomatis akan muncul di sini..."></textarea>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="preview-actions-bar">
+            <button class="btn btn-primary-blue" style="flex:1;" onclick="copyPTMPMessage()">
+              <i class="fa-solid fa-copy"></i> 📋 Salin Pesan
+            </button>
+            <button class="btn btn-whatsapp" style="flex:1;" onclick="sendPTMPWhatsApp()">
+              <i class="fa-brands fa-whatsapp"></i> 💬 Kirim WhatsApp
+            </button>
+          </div>
+
+          <div class="smart-logic-hint">
+            <i class="fa-solid fa-circle-info text-blue"></i>
+            <span><b>Logika Waktu Otomatis:</b> Menyesuaikan <i>hari ini</i>, <i>kemarin</i>, atau <i>format tanggal lengkap</i> secara otomatis.</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SUBTEMPLATE 2: PTMP RETURAN (NEW) -->
+      <div id="subtemplate-returan" class="template-container-grid hidden">
+        
+        <!-- LEFT COLUMN: FORM INPUT PTMP RETURAN -->
+        <div class="template-form-panel glass-panel">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-rotate-left text-red"></i> Form Isian PTMP Returan</h3>
+            <span class="tag-badge-pill">Template #2</span>
+          </div>
+
+          <form id="returan-form" onsubmit="event.preventDefault(); updateReturanPreview();">
+            
+            <!-- Branch Name Field -->
+            <div class="control-group" style="margin-bottom: 14px;">
+              <label class="control-label">
+                <i class="fa-solid fa-building-flag text-red"></i> Nama Cabang J&T
+                <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save HP/PC</span>
+              </label>
+              <input type="text" id="returan-branch-name" class="slide-title-input" placeholder="misal: KS Tubun" value="KS Tubun" oninput="syncBranchName('returan'); updateReturanPreview();">
+            </div>
+
+            <!-- Shop Name & Phone -->
+            <div class="form-row-2">
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-store"></i> Nama Toko / Customer</label>
+                <input type="text" id="returan-shop-name" class="slide-title-input" placeholder="misal: Toko Berkah" value="Toko Berkah" oninput="updateReturanPreview()">
+              </div>
+              <div class="control-group">
+                <label class="control-label"><i class="fa-brands fa-whatsapp text-green"></i> No. WA Customer (Opsional)</label>
+                <input type="tel" id="returan-phone" class="slide-title-input" placeholder="misal: 081234567890" oninput="updateReturanPreview()">
+              </div>
+            </div>
+
+            <!-- Resi Retur -->
+            <div class="control-group" style="margin-bottom: 14px;">
+              <label class="control-label"><i class="fa-solid fa-barcode"></i> Nomor Resi Retur</label>
+              <input type="text" id="returan-resi" class="slide-title-input" placeholder="misal: JX123456789" value="JX123456789" oninput="updateReturanPreview()">
+            </div>
+
+            <!-- Date & Time & Timezone -->
+            <div class="form-row-3">
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-calendar-day"></i> Tgl. Pengiriman Retur</label>
+                <input type="date" id="returan-date" class="slide-title-input" onchange="updateReturanPreview()">
+              </div>
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-clock"></i> Jam Pengiriman</label>
+                <input type="time" id="returan-time" class="slide-title-input" onchange="updateReturanPreview()">
+              </div>
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-globe"></i> Zona Waktu</label>
+                <select id="returan-tz" class="form-select" onchange="updateReturanPreview()">
+                  <option value="WITA" selected>WITA (Tengah)</option>
+                  <option value="WIB">WIB (Barat)</option>
+                  <option value="WIT">WIT (Timur)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Receiver Name & Receiver Role -->
+            <div class="form-row-2">
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-user-check"></i> Diterima Oleh (Nama)</label>
+                <input type="text" id="returan-receiver-name" class="slide-title-input" placeholder="misal: Andi" value="Andi" oninput="updateReturanPreview()">
+              </div>
+              <div class="control-group">
+                <label class="control-label"><i class="fa-solid fa-briefcase"></i> Keterangan / Jabatan Penerima</label>
+                <select id="returan-receiver-role" class="form-select" onchange="toggleReturanCustomRole(); updateReturanPreview();">
+                  <option value="Karyawan" selected>Karyawan</option>
+                  <option value="Bos/Pemilik">Bos / Pemilik</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Satpam">Satpam</option>
+                  <option value="Keluarga">Keluarga</option>
+                  <option value="Tetangga">Tetangga</option>
+                  <option value="Customer">Customer</option>
+                  <option value="Lainnya">Lainnya (Ketik Manual)</option>
+                </select>
+                <input type="text" id="returan-receiver-role-custom" class="slide-title-input hidden" style="margin-top:6px;" placeholder="Ketik Jabatan (misal: Penjaga Toko)" oninput="updateReturanPreview()">
+              </div>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="ptmp-action-row" style="margin-top: 16px;">
+              <button type="button" class="btn btn-primary-red" style="width:100%;" onclick="updateReturanPreview(true)">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> ⚡ Buat Pesan Returan Otomatis
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- RIGHT COLUMN: LIVE PREVIEW & COPY/SHARE ACTIONS -->
+        <div class="template-preview-panel glass-panel">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-eye text-blue"></i> PREVIEW PESAN RETURAN</h3>
+            <span class="preview-status-pill"><i class="fa-solid fa-circle-check text-green"></i> Siap Kirim</span>
+          </div>
+
+          <div class="message-preview-textarea-wrap">
+            <textarea id="returan-output-text" class="ptmp-textarea" readonly rows="10" placeholder="Pesan otomatis returan akan muncul di sini..."></textarea>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="preview-actions-bar">
+            <button class="btn btn-primary-blue" style="flex:1;" onclick="copyReturanMessage()">
+              <i class="fa-solid fa-copy"></i> 📋 Salin Pesan
+            </button>
+            <button class="btn btn-whatsapp" style="flex:1;" onclick="sendReturanWhatsApp()">
+              <i class="fa-brands fa-whatsapp"></i> 💬 Kirim WhatsApp
+            </button>
+          </div>
+
+          <div class="smart-logic-hint">
+            <i class="fa-solid fa-circle-info text-blue"></i>
+            <span><b>Logika Returan:</b> Format kalimat otomatis menyusun status penerimaan retur dengan tepat.</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FLOATING BOTTOM PILL NAVBAR (MATCHING SCREENSHOT) -->
+  <div class="bottom-pill-nav-container">
+    <nav class="bottom-pill-nav">
+      <button id="mobile-nav-dashboard" class="pill-nav-item active" onclick="switchView('dashboard')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-house"></i></div>
+        <span>Home</span>
+      </button>
+      <button id="mobile-nav-merge" class="pill-nav-item" onclick="switchView('merge')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-sliders"></i></div>
+        <span>Gabung Foto</span>
+      </button>
+      <button id="mobile-nav-upload" class="pill-nav-item" onclick="switchView('upload')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+        <span>Upload Link</span>
+      </button>
+      <button id="mobile-nav-template" class="pill-nav-item" onclick="switchView('template')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-file-signature"></i></div>
+        <span>Template</span>
+      </button>
+      <button id="mobile-nav-theme" class="pill-nav-item" onclick="toggleThemeMode()" title="Mode Gelap/Terang">
+        <div class="pill-nav-icon"><i id="bottom-theme-icon" class="fa-solid fa-moon"></i></div>
+        <span id="bottom-theme-label">Tema</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- FOOTER BRANDING (MATCHING SCREENSHOT) -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <span>J&T Express Ks_Tubun</span>
+        <span class="dot-sep">•</span>
+        <span>Privacy & Terms</span>
+        <span class="dot-sep">•</span>
+        <span>Operational Portal</span>
+      </div>
+      <div class="footer-ver">
+        <span>Version 2.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX MODAL FOR HIGH-RES INSPECTION -->
+  <div id="lightbox-modal" class="modal-overlay" onclick="closeLightbox(event)">
+    <div class="modal-content glass-panel" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modal-slide-title"><i class="fa-solid fa-expand text-red"></i> Pratinjau Canvas High-Res</h3>
+        <button class="modal-close-btn" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-image-preview" src="" alt="High Res Canvas Preview">
+      </div>
+      <div class="modal-footer">
+        <button id="modal-wa-btn" class="btn btn-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i> Share WhatsApp
+        </button>
+        <button id="modal-download-btn" class="btn btn-primary-red">
+          <i class="fa-solid fa-download"></i> Unduh Slide Ini
+        </button>
+        <button class="btn btn-secondary" onclick="closeLightbox()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- External CDN Scripts -->
+  <!-- JSZip for ZIP compression -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <!-- FileSaver.js for file download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <!-- App Script -->
+  <script src="app.js"></script>
+</body>
+</html>
