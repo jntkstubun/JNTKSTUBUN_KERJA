@@ -343,6 +343,9 @@ function renderSlidesListUI() {
           <button class="btn btn-sm btn-primary-blue" onclick="createSlideShortlink('${slide.id}')">
             <i class="fa-solid fa-link"></i> Buat Link
           </button>
+          <button class="btn btn-sm btn-whatsapp" onclick="shareSlideToWhatsApp('${slide.id}')">
+            <i class="fa-brands fa-whatsapp"></i> Share WhatsApp
+          </button>
           <button class="btn btn-sm btn-primary-red" onclick="downloadSingleSlide('${slide.id}')">
             <i class="fa-solid fa-download"></i> Unduh Slide
           </button>
@@ -1096,8 +1099,72 @@ function renderUploadHistoryUI() {
 }
 
 // --------------------------------------------------------------------------
-// 9. LIGHTBOX MODAL INSPECTION
+// 9. LIGHTBOX MODAL INSPECTION & WHATSAPP SHARING
 // --------------------------------------------------------------------------
+async function shareSlideToWhatsApp(slideId) {
+  const slide = slidesState.find(s => s.id === slideId);
+  if (!slide || slide.photos.length === 0) {
+    showToast('Tambahkan foto terlebih dahulu ke slide ini.', 'warning');
+    return;
+  }
+
+  const canvas = document.getElementById(`canvas-${slideId}`);
+  if (!canvas) return;
+
+  showToast('💬 Mengunggah foto ke Cloud & menyiapkan WhatsApp...', 'info', 4000);
+
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+  const cloudResult = await uploadToCloudStorage(dataUrl);
+
+  let linkUrl = '';
+  if (cloudResult && cloudResult.url) {
+    linkUrl = cloudResult.url;
+  } else {
+    showToast('⚠️ Tidak dapat terhubung ke Cloud. Pastikan koneksi internet aktif.', 'error');
+    return;
+  }
+
+  const slideTitle = slide.title || 'Slide Foto Paket';
+
+  // Format persis sesuai permintaan:
+  // FOTO
+  // (NAMA FILE)
+  // LINK : (LINK FOTONYA)
+  const textMsg = 
+    `FOTO\n` +
+    `${slideTitle}\n` +
+    `LINK : ${linkUrl}`;
+
+  const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(textMsg)}`;
+  window.open(waUrl, '_blank');
+  showToast('📱 Berhasil! Membuka aplikasi WhatsApp...', 'success');
+}
+
+function shareUploadResultToWhatsApp() {
+  const urlInput = document.getElementById('shortlink-url-input');
+  const nameEl = document.getElementById('result-filename');
+  if (!urlInput || !urlInput.value || urlInput.value.startsWith('[')) {
+    showToast('Belum ada link foto online untuk dibagikan.', 'warning');
+    return;
+  }
+
+  const fileName = nameEl ? nameEl.textContent : 'Foto Paket';
+  const linkUrl = urlInput.value;
+
+  // Format persis sesuai permintaan:
+  // FOTO
+  // (NAMA FILE)
+  // LINK : (LINK FOTONYA)
+  const textMsg = 
+    `FOTO\n` +
+    `${fileName}\n` +
+    `LINK : ${linkUrl}`;
+
+  const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(textMsg)}`;
+  window.open(waUrl, '_blank');
+  showToast('📱 Membuka WhatsApp...', 'success');
+}
+
 function openLightbox(slideId) {
   const slide = slidesState.find(s => s.id === slideId);
   if (!slide || slide.photos.length === 0) {
@@ -1112,10 +1179,12 @@ function openLightbox(slideId) {
   const modalImg = document.getElementById('modal-image-preview');
   const titleEl = document.getElementById('modal-slide-title');
   const downloadBtn = document.getElementById('modal-download-btn');
+  const waBtn = document.getElementById('modal-wa-btn');
 
   modalImg.src = canvas.toDataURL('image/jpeg', 0.95);
   titleEl.innerHTML = `<i class="fa-solid fa-expand text-red"></i> ${escapeHtml(slide.title)}`;
   downloadBtn.onclick = () => downloadSingleSlide(slideId);
+  if (waBtn) waBtn.onclick = () => shareSlideToWhatsApp(slideId);
 
   modal.classList.add('active');
 }
