@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J&T Ks_Tubun - Portal Foto & Link Uploader</title>
+  <meta name="description" content="Portal Penggabung Foto Paket Multi-Slide & Upload Link Gambar Online J&T Ks_Tubun">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- PWA Meta Tags & Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e60012">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="J&T Portal">
+</head>
+<body>
+
+  <div class="app-layout-wrapper">
+
+    <!-- =========================================================================
+         LEFT VERTICAL SIDEBAR NAVIGATION
+         ========================================================================= -->
+    <aside class="app-sidebar">
+      <!-- Logo Brand Badge -->
+      <div class="sidebar-brand-box" onclick="switchView('dashboard')">
+        <div class="sidebar-jt-logo-pill">
+          <span class="jt-red-txt">J&T</span>
+          <span class="jt-sub-txt">EXPRESS</span>
+        </div>
+      </div>
+
+      <!-- Main Sidebar Menu Items -->
+      <nav class="sidebar-nav-menu">
+        <button id="side-nav-dashboard" class="side-nav-item active" onclick="switchView('dashboard')">
+          <i class="fa-solid fa-house"></i>
+          <span data-i18n="nav_dashboard">Beranda</span>
+        </button>
+        <button id="side-nav-merge" class="side-nav-item" onclick="switchView('merge')">
+          <i class="fa-solid fa-images"></i>
+          <span data-i18n="nav_merge">Gabung Foto</span>
+        </button>
+        <button id="side-nav-upload" class="side-nav-item" onclick="switchView('upload')">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <span data-i18n="nav_upload">Upload Link</span>
+        </button>
+        <button id="side-nav-template" class="side-nav-item" onclick="switchView('template')">
+          <i class="fa-solid fa-file-signature"></i>
+          <span data-i18n="nav_template">Template Kerja</span>
+        </button>
+        <button id="side-nav-settings" class="side-nav-item" onclick="switchView('settings')">
+          <i class="fa-solid fa-gear"></i>
+          <span data-i18n="nav_settings">Pengaturan</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Support & FAQ Button -->
+      <div class="sidebar-support-box">
+        <button class="btn-support-help" onclick="openFaqModal()">
+          <i class="fa-solid fa-circle-question text-red" style="font-size: 1.4rem;"></i>
+          <div class="support-btn-text">
+            <span data-i18n="nav_help">Butuh Bantuan?</span>
+            <small data-i18n="nav_faq">Panduan & FAQ</small>
+          </div>
+        </button>
+      </div>
+    </aside>
+
+    <!-- =========================================================================
+         RIGHT MAIN CONTENT AREA
+         ========================================================================= -->
+    <main class="app-main-content">
+
+      <!-- TOP SUB-HEADER BAR -->
+      <header class="main-top-bar">
+        <div class="top-bar-clock">
+          <i class="fa-regular fa-calendar-days text-muted"></i>
+          <span id="header-clock-date">Rabu, 26 Agustus 2026</span>
+          <span class="sep-line">|</span>
+          <i class="fa-regular fa-clock text-muted"></i>
+          <span id="header-clock-time">08:30:33 WITA</span>
+        </div>
+
+        <div class="top-bar-actions">
+          <button id="pwa-install-btn" class="top-action-btn hidden" onclick="triggerPwaInstall()" title="Install Aplikasi J&T di HP/PC" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: none; font-weight: 800;">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+            <span>Install App</span>
+          </button>
+          <button id="theme-toggle-btn" class="top-action-btn" onclick="toggleThemeMode()" title="Ubah Mode Gelap / Terang">
+            <i class="fa-solid fa-moon"></i>
+            <span id="theme-btn-text" data-i18n="btn_theme_dark">Mode Gelap</span>
+          </button>
+          <button class="top-action-btn btn-dash-active" onclick="switchView('dashboard')">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span data-i18n="btn_dashboard">Dashboard</span>
+          </button>
+          <button id="lang-toggle-btn" class="top-action-btn" onclick="toggleLanguage()" title="Ubah Bahasa / Change Language" style="font-weight: 800; border-color: rgba(230, 0, 18, 0.3);">
+            <span id="lang-flag-icon">🇮🇩</span>
+            <span id="lang-btn-text">ID</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: DASHBOARD UTAMA (HOME) -->
+      <section id="dashboard-view" class="view-section active">
+        
+        <!-- HERO BANNER SECTION (MATCHING MOCKUP LIGHT THEME) -->
+        <div class="dashboard-hero-light-wrap">
+          <div class="hero-content-flex">
+            
+            <!-- Left Hero Content -->
+            <div class="hero-left-info">
+              <span class="hero-welcome-red-txt" data-i18n="hero_welcome">Selamat Datang di</span>
+              <h1 class="hero-main-title-light">
+                <span data-i18n="hero_portal_title">SOLUSI KERJA</span><br>
+                <span class="text-red">J&T Express</span>
+              </h1>
+              <p class="hero-subtitle-light" data-i18n="hero_subtitle">Solusi Cepat, Modern & Praktis untuk Operasional Harian Anda</p>
+              
+              <div class="hero-op-badge-light">
+                <i class="fa-solid fa-shield-halved text-muted"></i>
+                <span>Operational Tools J&T Express</span>
+              </div>
+
+              <button id="pwa-hero-install-btn" class="hidden" style="background: linear-gradient(135deg, #e60012 0%, #c40010 100%); color: #ffffff; border: none; padding: 10px 20px; border-radius: 30px; font-weight: 800; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; cursor: pointer; box-shadow: 0 6px 18px rgba(230,0,18,0.35); transition: transform 0.2s;" onclick="triggerPwaInstall()">
+                <i class="fa-solid fa-download"></i> 📲 Install Aplikasi J&T di HP
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3 MAIN SERVICE CARDS GRID -->
+        <div class="dashboard-cards-container">
+          
+          <!-- CARD 1: GABUNG FOTO MULTI-SLIDE -->
+          <div class="service-card-v2 card-red-theme" onclick="switchView('merge')">
+            <div class="card-v2-header">
+              <div class="card-v2-icon icon-red">
+                <i class="fa-solid fa-image"></i>
+              </div>
+              <h2 class="card-v2-title" data-i18n="card1_title">Gabung Foto Multi-Slide</h2>
+              <p class="card-v2-desc" data-i18n="card1_desc">
+                Gabungkan hingga 5 foto per slide dengan watermark J&T & stempel waktu otomatis.
+              </p>
+              <div class="card-v2-tags">
+                <span class="v2-tag tag-red" data-i18n="card1_tag1">Maks 5 Foto</span>
+                <span class="v2-tag tag-glass" data-i18n="card1_tag2">Multi-Slide</span>
+              </div>
+            </div>
+
+            <!-- Inner Recessed Dropzone Preview Box -->
+            <div class="card-v2-preview-box">
+              <i class="fa-solid fa-image placeholder-icon"></i>
+              <span class="preview-box-text"><span data-i18n="card1_drop">Drag & Drop foto di sini</span><br><small data-i18n="card1_drop_sub">atau klik untuk memilih</small></span>
+            </div>
+
+            <button class="v2-action-btn btn-red-pill">
+              <span data-i18n="card1_btn">Buka Fitur Gabung Foto</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- CARD 2: UPLOAD FOTO JADI LINK ONLINE -->
+          <div class="service-card-v2 card-blue-theme" onclick="switchView('upload')">
+            <div class="card-v2-header">
+              <div class="card-v2-icon icon-blue">
+                <i class="fa-solid fa-link"></i>
+              </div>
+              <h2 class="card-v2-title" data-i18n="card2_title">Upload Foto Jadi Link Online</h2>
+              <p class="card-v2-desc" data-i18n="card2_desc">
+                Unggah foto atau tempel dari clipboard untuk buat link publik instan.
+              </p>
+              <div class="card-v2-tags">
+                <span class="v2-tag tag-blue" data-i18n="card2_tag1">Cloud Storage</span>
+                <span class="v2-tag tag-glass" data-i18n="card2_tag2">Clipboard Ctrl+V</span>
+              </div>
+            </div>
+
+            <!-- Inner Recessed Dropzone Preview Box -->
+            <div class="card-v2-preview-box blue-preview-box">
+              <i class="fa-solid fa-cloud-arrow-up placeholder-icon text-blue"></i>
+              <span class="preview-box-text"><span data-i18n="card2_drop">Drag & Drop atau Ctrl+V</span><br><small data-i18n="card2_drop_sub">untuk upload</small></span>
+            </div>
+
+            <button class="v2-action-btn btn-blue-pill">
+              <span data-i18n="card2_btn">Buka Fitur Upload Link</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- CARD 3: TEMPLATE KERJA OPERASIONAL (PTMP) -->
+          <div class="service-card-v2 card-green-theme" onclick="switchView('template')">
+            <div class="card-v2-header">
+              <div class="card-v2-icon icon-green">
+                <i class="fa-solid fa-file-signature"></i>
+              </div>
+              <h2 class="card-v2-title" data-i18n="card3_title">Template Kerja (PTMP & Konfirmasi)</h2>
+              <p class="card-v2-desc" data-i18n="card3_desc">
+                Buat pesan konfirmasi PTMP & Returan otomatis dengan logika waktu pintar.
+              </p>
+              <div class="card-v2-tags">
+                <span class="v2-tag tag-green" data-i18n="card3_tag1">Logika Waktu Pintar</span>
+                <span class="v2-tag tag-glass" data-i18n="card3_tag2">Auto WA Chat</span>
+              </div>
+            </div>
+
+            <!-- Inner Recessed Preview Box -->
+            <div class="card-v2-preview-box green-preview-box">
+              <i class="fa-solid fa-paper-plane placeholder-icon text-green"></i>
+              <span class="preview-box-text"><span data-i18n="card3_preview">Pilih template & kirim otomatis</span><br><small data-i18n="card3_preview_sub">ke WhatsApp</small></span>
+            </div>
+
+            <button class="v2-action-btn btn-green-pill">
+              <span data-i18n="card3_btn">Buka Template Kerja</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- TOOLS CEPAT SECTION (4 QUICK FEATURE CARDS) -->
+        <div class="quick-tools-section">
+          <h3 class="quick-tools-title-dark" data-i18n="quick_tools_heading">Tools Cepat</h3>
+          
+          <div class="bottom-features-grid">
+            <div class="feature-card-v2" onclick="switchView('merge')">
+              <div class="f-v2-icon icon-red-soft"><i class="fa-solid fa-table-cells-large"></i></div>
+              <div class="f-v2-body">
+                <h4 class="f-v2-heading" data-i18n="quick_tool_layout">Layout Presisi 4 Variasi</h4>
+              </div>
+              <i class="fa-solid fa-chevron-right f-v2-arrow"></i>
+            </div>
+
+            <div class="feature-card-v2" onclick="switchView('merge')">
+              <div class="f-v2-icon icon-red-soft"><i class="fa-solid fa-clock-rotate-left"></i></div>
+              <div class="f-v2-body">
+                <h4 class="f-v2-heading" data-i18n="quick_tool_timestamp">Stempel Waktu Real-Time WITA</h4>
+              </div>
+              <i class="fa-solid fa-chevron-right f-v2-arrow"></i>
+            </div>
+
+            <div class="feature-card-v2" onclick="switchView('merge')">
+              <div class="f-v2-icon icon-red-soft"><i class="fa-solid fa-file-zipper"></i></div>
+              <div class="f-v2-body">
+                <h4 class="f-v2-heading" data-i18n="quick_tool_zip">Batch ZIP Exporter</h4>
+              </div>
+              <i class="fa-solid fa-chevron-right f-v2-arrow"></i>
+            </div>
+
+            <div class="feature-card-v2" onclick="switchView('upload')">
+              <div class="f-v2-icon icon-red-soft"><i class="fa-solid fa-paste"></i></div>
+              <div class="f-v2-body">
+                <h4 class="f-v2-heading" data-i18n="quick_tool_paste">Universal Clipboard Paste</h4>
+              </div>
+              <i class="fa-solid fa-chevron-right f-v2-arrow"></i>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- VIEW 2: FITUR GABUNG FOTO MULTI-SLIDE -->
+    <section id="merge-view" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2 class="section-title"><i class="fa-solid fa-layer-group text-red"></i> <span data-i18n="merge_sec_title">Penggabung Foto Multi-Slide</span></h2>
+          <p class="section-subtitle" data-i18n="merge_sec_sub">Buat kolase foto paket presisi tinggi dengan stempel waktu & watermark.</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-secondary" onclick="addNewSlide()">
+            <i class="fa-solid fa-plus"></i> <span data-i18n="btn_add_slide">Tambah Slide Baru</span>
+          </button>
+          <button class="btn btn-primary-red" onclick="downloadAllSlidesZip()">
+            <i class="fa-solid fa-file-zipper"></i> <span data-i18n="btn_download_zip">Unduh Semua Slide (ZIP)</span>
+          </button>
+          <button class="btn btn-whatsapp" onclick="shareAllSlidesWhatsApp()" style="background: #25d366; color: #ffffff; font-weight: 700; border: none; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);">
+            <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> <span data-i18n="btn_share_all_wa">Share Semua Foto</span>
+          </button>
+          <button class="btn btn-secondary" onclick="openMergeSettingsModal()">
+            <i class="fa-solid fa-sliders text-red"></i> <span data-i18n="btn_merge_settings">Pengaturan Gabung Foto</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="merge-full-container">
+        <!-- SLIDES LIST CONTAINER (FULL WIDTH) -->
+        <div class="slides-main-container" style="width: 100%;">
+          <div id="slides-list" class="slides-list">
+            <!-- Dynamic slides rendered by app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+      <!-- VIEW 3: FITUR UPLOAD FOTO JADI LINK ONLINE -->
+      <section id="upload-view" class="view-section">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title"><i class="fa-solid fa-cloud-arrow-up text-blue"></i> <span data-i18n="upload_sec_title">Upload Foto Jadi Link Online Publik</span></h2>
+            <p class="section-subtitle" data-i18n="upload_sec_sub">Unggah foto atau tempel dari clipboard (<kbd>Ctrl + V</kbd>) untuk buat link publik instan.</p>
+          </div>
+        </div>
+
+        <div class="upload-container">
+          
+          <!-- DROPZONE AREA -->
+          <div id="upload-dropzone" class="upload-dropzone glass-panel">
+            <input type="file" id="file-uploader-input" accept="image/*" multiple onchange="handleFileSelect(event)">
+            <div class="dropzone-content">
+              <div class="dropzone-icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <h3 class="dropzone-title" data-i18n="dropzone_title">Tarik & Lepas Foto di Sini, atau Pilih File</h3>
+              <p class="dropzone-subtitle" data-i18n="dropzone_sub">Mendukung format JPG, PNG, WEBP, GIF (Maks 10MB)</p>
+              
+              <div class="clipboard-banner">
+                <i class="fa-solid fa-keyboard text-yellow"></i>
+                <span>Fitur Pintar: Tekan <kbd>Ctrl + V</kbd> di mana saja untuk upload screenshot clipboard!</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- UPLOAD RESULT CARD (DYNAMIC) -->
+          <div id="upload-result-card" class="upload-result-card glass-panel hidden">
+            <div class="result-header">
+              <div class="result-badge"><i class="fa-solid fa-circle-check text-green"></i> Berhasil Diunggah Online Publik</div>
+              <span class="upload-time-stamp" id="result-timestamp">Baru Saja</span>
+            </div>
+
+            <div class="result-body">
+              <div class="result-thumbnail-wrap">
+                <img id="result-thumb" src="" alt="Uploaded Image Preview">
+              </div>
+              
+              <div class="result-details">
+                <h4 id="result-filename" class="result-filename">paket_resi_screenshot.png</h4>
+                <p id="result-filemeta" class="result-meta">1920 x 1080 px • 450 KB</p>
+
+                <div class="shortlink-box">
+                  <label class="control-label">Link Online Publik (Bisa Di-akses Siapa Saja):</label>
+                  <div class="input-with-button">
+                    <input type="text" id="shortlink-url-input" readonly value="https://tmpfiles.org/dl/sample.jpg">
+                    <button id="btn-copy-shortlink" class="btn btn-primary-blue" onclick="copyShortlinkFromInput()">
+                      <i class="fa-solid fa-copy"></i> Salin Link
+                    </button>
+                    <button id="btn-wa-share-upload" class="btn btn-whatsapp" onclick="shareUploadResultToWhatsApp()">
+                      <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </button>
+                    <a id="btn-open-tab" href="#" target="_blank" class="btn btn-secondary">
+                      <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RECENT UPLOADS HISTORY -->
+          <div class="history-section glass-panel">
+            <div class="history-header">
+              <h3><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Upload Terbaru (10 Terakhir)</h3>
+              <button class="btn btn-sm btn-outline-danger" onclick="clearUploadHistory()">
+                <i class="fa-solid fa-trash"></i> Bersihkan Riwayat
+              </button>
+            </div>
+
+            <div id="history-list" class="history-list">
+              <!-- Dynamic history items rendered by app.js -->
+              <div class="empty-history">
+                <i class="fa-solid fa-folder-open"></i>
+                <p>Belum ada riwayat unggahan foto. Unggah foto atau gunakan Ctrl+V untuk memulai.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW 4: TEMPLATE KERJA OTOMATIS (PTMP & KELOLA PESAN) -->
+      <section id="template-view" class="view-section">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title"><i class="fa-solid fa-file-signature text-red"></i> <span data-i18n="template_sec_title">Template Kerja Operasional J&T</span></h2>
+            <p class="section-subtitle" data-i18n="template_sec_sub">Buat pesan konfirmasi otomatis & kirim ke WhatsApp instan.</p>
+          </div>
+        </div>
+
+        <!-- TEMPLATE SELECTOR TABS -->
+        <div class="template-selector-tabs">
+          <button id="tab-ptmp" class="template-tab-btn active" onclick="switchSubTemplate('ptmp')">
+            <i class="fa-solid fa-envelope-circle-check"></i>
+            <span>1. PTMP Standard</span>
+          </button>
+          <button id="tab-returan" class="template-tab-btn" onclick="switchSubTemplate('returan')">
+            <i class="fa-solid fa-rotate-left"></i>
+            <span>2. PTMP Returan</span>
+          </button>
+          <button id="tab-podcancel" class="template-tab-btn" onclick="switchSubTemplate('podcancel')">
+            <i class="fa-solid fa-ban text-red"></i>
+            <span>3. POD Cancel Order</span>
+          </button>
+          <button id="tab-nowa" class="template-tab-btn" onclick="switchSubTemplate('nowa')">
+            <i class="fa-solid fa-phone-slash text-orange"></i>
+            <span>4. No WA Tidak Terdaftar</span>
+          </button>
+        </div>
+
+        <!-- SUBTEMPLATE 1: PTMP STANDARD -->
+        <div id="subtemplate-ptmp" class="template-container-grid">
+          
+          <!-- LEFT COLUMN: FORM INPUT PTMP STANDARD -->
+          <div class="template-form-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-sliders text-red"></i> Form Isian Konfirmasi PTMP Standard</h3>
+              <span class="tag-badge-pill">Template #1</span>
+            </div>
+
+            <form id="ptmp-form" onsubmit="event.preventDefault(); updatePTMPPreview();">
+              
+              <!-- Branch & City Name Fields -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label">
+                    <i class="fa-solid fa-building-flag text-red"></i> Nama Cabang Drop Point (DP)
+                    <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save</span>
+                  </label>
+                  <input type="text" id="ptmp-branch-name" class="slide-title-input" placeholder="misal: KS Tubun" value="KS Tubun" oninput="syncBranchName('ptmp'); updatePTMPPreview();">
+                </div>
+                <div class="control-group">
+                  <label class="control-label">
+                    <i class="fa-solid fa-city text-red"></i> Nama Kota Cabang DP (Opsional)
+                    <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save</span>
+                  </label>
+                  <input type="text" id="ptmp-city-name" class="slide-title-input" placeholder="misal: Samarinda / Jakarta" value="" oninput="saveUserPreferences(); updatePTMPPreview();">
+                </div>
+              </div>
+
+              <!-- Admin/Kurir Selection & Staff Name -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-user-shield"></i> Peran (Admin/Kurir)</label>
+                  <select id="ptmp-role" class="form-select" onchange="updatePTMPPreview()">
+                    <option value="Admin" selected>Admin</option>
+                    <option value="Kurir">Kurir</option>
+                  </select>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">
+                    <i class="fa-solid fa-id-badge"></i> Nama Admin/Kurir
+                    <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save</span>
+                  </label>
+                  <input type="text" id="ptmp-staff-name" class="slide-title-input" placeholder="misal: Imam" value="Imam" oninput="saveUserPreferences(); updatePTMPPreview();">
+                </div>
+              </div>
+
+              <!-- Customer Name & Phone -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-user"></i> Nama Customer</label>
+                  <input type="text" id="ptmp-customer-name" class="slide-title-input" placeholder="misal: Budi Santoso" value="Budi Santoso" oninput="updatePTMPPreview()">
+                </div>
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-brands fa-whatsapp text-green"></i> No. WA Customer (Opsional)</label>
+                  <input type="tel" id="ptmp-customer-phone" class="slide-title-input" placeholder="misal: 081234567890" oninput="updatePTMPPreview()">
+                </div>
+              </div>
+
+              <!-- Resi Field -->
+              <div class="control-group" style="margin-bottom: 14px;">
+                <label class="control-label"><i class="fa-solid fa-barcode"></i> Nomor Resi Paket</label>
+                <input type="text" id="ptmp-resi" class="slide-title-input" placeholder="misal: JX123456789" value="JX123456789" oninput="updatePTMPPreview()">
+              </div>
+
+              <!-- Generate Button -->
+              <div class="ptmp-action-row" style="margin-top: 16px;">
+                <button type="button" class="btn btn-primary-red" style="width:100%;" onclick="updatePTMPPreview(true)">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> ⚡ Buat Pesan Otomatis
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+          <!-- RIGHT COLUMN: LIVE PREVIEW & COPY/SHARE ACTIONS -->
+          <div class="template-preview-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-eye text-blue"></i> PREVIEW PESAN OTOMATIS</h3>
+              <span class="preview-status-pill"><i class="fa-solid fa-circle-check text-green"></i> Siap Kirim</span>
+            </div>
+
+            <div class="message-preview-textarea-wrap">
+              <textarea id="ptmp-output-text" class="ptmp-textarea" readonly rows="10" placeholder="Pesan otomatis akan muncul di sini..."></textarea>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="preview-actions-bar">
+              <button class="btn btn-primary-blue" style="flex:1;" onclick="copyPTMPMessage()">
+                <i class="fa-solid fa-copy"></i> 📋 Salin Pesan
+              </button>
+              <button class="btn btn-whatsapp" style="flex:1;" onclick="sendPTMPWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> 💬 Kirim WhatsApp
+              </button>
+            </div>
+
+            <div class="smart-logic-hint">
+              <i class="fa-solid fa-circle-info text-blue"></i>
+              <span><b>Logika Waktu Otomatis:</b> Menyesuaikan <i>hari ini</i>, <i>kemarin</i>, atau <i>format tanggal lengkap</i> secara otomatis.</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- SUBTEMPLATE 2: PTMP RETURAN (NEW) -->
+        <div id="subtemplate-returan" class="template-container-grid hidden">
+          
+          <!-- LEFT COLUMN: FORM INPUT PTMP RETURAN -->
+          <div class="template-form-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-rotate-left text-red"></i> Form Isian PTMP Returan</h3>
+              <span class="tag-badge-pill">Template #2</span>
+            </div>
+
+            <form id="returan-form" onsubmit="event.preventDefault(); updateReturanPreview();">
+              
+              <!-- Branch Name Field -->
+              <div class="control-group" style="margin-bottom: 14px;">
+                <label class="control-label">
+                  <i class="fa-solid fa-building-flag text-red"></i> Nama Cabang J&T
+                  <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save HP/PC</span>
+                </label>
+                <input type="text" id="returan-branch-name" class="slide-title-input" placeholder="misal: KS Tubun" value="KS Tubun" oninput="syncBranchName('returan'); updateReturanPreview();">
+              </div>
+
+              <!-- Shop Name & Phone -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-store"></i> Nama Toko / Customer</label>
+                  <input type="text" id="returan-shop-name" class="slide-title-input" placeholder="misal: Toko Berkah" value="Toko Berkah" oninput="updateReturanPreview()">
+                </div>
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-brands fa-whatsapp text-green"></i> No. WA Customer (Opsional)</label>
+                  <input type="tel" id="returan-phone" class="slide-title-input" placeholder="misal: 081234567890" oninput="updateReturanPreview()">
+                </div>
+              </div>
+
+              <!-- Resi Retur -->
+              <div class="control-group" style="margin-bottom: 14px;">
+                <label class="control-label"><i class="fa-solid fa-barcode"></i> Nomor Resi Retur</label>
+                <input type="text" id="returan-resi" class="slide-title-input" placeholder="misal: JX123456789" value="JX123456789" oninput="updateReturanPreview()">
+              </div>
+
+              <!-- Date & Time & Timezone -->
+              <div class="form-row-3">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-calendar-day"></i> Tgl. Pengiriman Retur</label>
+                  <input type="date" id="returan-date" class="slide-title-input" onchange="updateReturanPreview()">
+                </div>
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-clock"></i> Jam Pengiriman</label>
+                  <input type="time" id="returan-time" class="slide-title-input" onchange="updateReturanPreview()">
+                </div>
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-globe"></i> Zona Waktu</label>
+                  <select id="returan-tz" class="form-select" onchange="updateReturanPreview()">
+                    <option value="WITA" selected>WITA (Tengah)</option>
+                    <option value="WIB">WIB (Barat)</option>
+                    <option value="WIT">WIT (Timur)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Receiver Name & Receiver Role -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-user-check"></i> Diterima Oleh (Nama)</label>
+                  <input type="text" id="returan-receiver-name" class="slide-title-input" placeholder="misal: Andi" value="Andi" oninput="updateReturanPreview()">
+                </div>
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-briefcase"></i> Keterangan / Jabatan Penerima</label>
+                  <select id="returan-receiver-role" class="form-select" onchange="toggleReturanCustomRole(); updateReturanPreview();">
+                    <option value="Karyawan" selected>Karyawan</option>
+                    <option value="Bos/Pemilik">Bos / Pemilik</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Satpam">Satpam</option>
+                    <option value="Keluarga">Keluarga</option>
+                    <option value="Tetangga">Tetangga</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Lainnya">Lainnya (Ketik Manual)</option>
+                  </select>
+                  <input type="text" id="returan-receiver-role-custom" class="slide-title-input hidden" style="margin-top:6px;" placeholder="Ketik Jabatan (misal: Penjaga Toko)" oninput="updateReturanPreview()">
+                </div>
+              </div>
+
+              <!-- Generate Button -->
+              <div class="ptmp-action-row" style="margin-top: 16px;">
+                <button type="button" class="btn btn-primary-red" style="width:100%;" onclick="updateReturanPreview(true)">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> ⚡ Buat Pesan Returan Otomatis
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+          <!-- RIGHT COLUMN: LIVE PREVIEW & COPY/SHARE ACTIONS -->
+          <div class="template-preview-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-eye text-blue"></i> PREVIEW PESAN RETURAN</h3>
+              <span class="preview-status-pill"><i class="fa-solid fa-circle-check text-green"></i> Siap Kirim</span>
+            </div>
+
+            <div class="message-preview-textarea-wrap">
+              <textarea id="returan-output-text" class="ptmp-textarea" readonly rows="10" placeholder="Pesan otomatis returan akan muncul di sini..."></textarea>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="preview-actions-bar">
+              <button class="btn btn-primary-blue" style="flex:1;" onclick="copyReturanMessage()">
+                <i class="fa-solid fa-copy"></i> 📋 Salin Pesan
+              </button>
+              <button class="btn btn-whatsapp" style="flex:1;" onclick="sendReturanWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> 💬 Kirim WhatsApp
+              </button>
+            </div>
+
+            <div class="smart-logic-hint">
+              <i class="fa-solid fa-circle-info text-blue"></i>
+              <span><b>Logika Returan:</b> Format kalimat otomatis menyusun status penerimaan retur dengan tepat.</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- SUBTEMPLATE 3: POD CANCEL ORDER -->
+        <div id="subtemplate-podcancel" class="template-container-grid hidden">
+          
+          <!-- LEFT COLUMN: FORM INPUT POD CANCEL ORDER -->
+          <div class="template-form-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-sliders text-red"></i> Form Isian POD Cancel Order</h3>
+              <span class="tag-badge-pill">Template #3</span>
+            </div>
+
+            <form id="podcancel-form" onsubmit="event.preventDefault(); updatePODCancelPreview();">
+              
+              <!-- Greeting, Branch, & City Fields -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-sun text-yellow"></i> Sapaan Waktu</label>
+                  <select id="podcancel-greeting" class="form-select" onchange="updatePODCancelPreview()">
+                    <option value="pagi">Selamat Pagi</option>
+                    <option value="siang" selected>Selamat Siang</option>
+                    <option value="sore">Selamat Sore</option>
+                    <option value="malam">Selamat Malam</option>
+                  </select>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">
+                    <i class="fa-solid fa-building-flag text-red"></i> Nama Cabang J&T
+                    <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save</span>
+                  </label>
+                  <input type="text" id="podcancel-branch-name" class="slide-title-input" placeholder="misal: KS Tubun" value="KS Tubun" oninput="syncBranchName('podcancel'); updatePODCancelPreview();">
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">
+                    <i class="fa-solid fa-city text-red"></i> Nama Kota DP (Opsional)
+                    <span class="auto-save-tag"><i class="fa-solid fa-floppy-disk"></i> Auto-Save</span>
+                  </label>
+                  <input type="text" id="podcancel-city-name" class="slide-title-input" placeholder="misal: Banjarmasin" value="" oninput="saveUserPreferences(); updatePODCancelPreview();">
+                </div>
+              </div>
+
+              <!-- Sender Name & Order Number -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-user text-blue"></i> Nama Pengirim</label>
+                  <input type="text" id="podcancel-sender-name" class="slide-title-input" placeholder="misal: Budi / Toko ABC" oninput="updatePODCancelPreview()">
+                </div>
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-barcode text-red"></i> No. Order / Resi</label>
+                  <input type="text" id="podcancel-order-no" class="slide-title-input" placeholder="misal: JX1234567890 / ORD-99" oninput="updatePODCancelPreview()">
+                </div>
+              </div>
+
+              <!-- Reason Dropdown & Other Write-in Input -->
+              <div class="control-group" style="margin-bottom: 14px;">
+                <label class="control-label"><i class="fa-solid fa-circle-exclamation text-red"></i> Alasan Cancel Order</label>
+                <select id="podcancel-reason-select" class="form-select" onchange="togglePODCancelOtherInput(); updatePODCancelPreview();">
+                  <option value="Salah memasukan detail pesanan" selected>Salah memasukan detail pesanan</option>
+                  <option value="Terlalu lama menunggu sprinter">Terlalu lama menunggu sprinter</option>
+                  <option value="Kendala proses pembayaran dengan uang tunai">Kendala proses pembayaran dengan uang tunai</option>
+                  <option value="Memilih untuk drop-off">Memilih untuk drop-off</option>
+                  <option value="Sprinter meminta membatalkan pesanan">Sprinter meminta membatalkan pesanan</option>
+                  <option value="lainnya">Lainnya (Isi Sendiri...)</option>
+                </select>
+              </div>
+
+              <div id="podcancel-other-reason-wrap" class="control-group hidden" style="margin-bottom: 14px;">
+                <label class="control-label"><i class="fa-solid fa-pen-to-square text-blue"></i> Tuliskan Alasan Lainnya</label>
+                <input type="text" id="podcancel-other-reason-input" class="slide-title-input" placeholder="Tuliskan alasan cancel order di sini..." oninput="updatePODCancelPreview()">
+              </div>
+
+              <button type="button" class="btn btn-primary-red" style="width: 100%; justify-content: center; margin-top: 8px;" onclick="sharePODCancelWhatsApp()">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Kirim Ke WhatsApp Customer
+              </button>
+
+            </form>
+          </div>
+
+          <!-- RIGHT COLUMN: PREVIEW RESULT TEXTAREA -->
+          <div class="template-preview-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-eye text-blue"></i> PREVIEW PESAN POD CANCEL</h3>
+              <span class="preview-status-pill"><i class="fa-solid fa-circle-check text-green"></i> Siap Kirim</span>
+            </div>
+
+            <div class="message-preview-textarea-wrap">
+              <textarea id="podcancel-result-text" class="ptmp-textarea" readonly rows="10" placeholder="Hasil format pesan POD Cancel Order akan muncul di sini..."></textarea>
+            </div>
+
+            <div class="preview-actions-bar">
+              <button class="btn btn-primary-blue" style="flex:1;" onclick="copyPODCancelText()">
+                <i class="fa-solid fa-copy"></i> 📋 Salin Pesan
+              </button>
+              <button class="btn btn-whatsapp" style="flex:1;" onclick="sharePODCancelWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> 💬 Kirim WhatsApp
+              </button>
+            </div>
+
+            <div class="smart-logic-hint">
+              <i class="fa-solid fa-circle-info text-blue"></i>
+              <span><b>Logika POD Cancel:</b> Format kalimat otomatis menyusun alasan dan konfirmasi pembatalan order.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SUBTEMPLATE 4: NO WA TIDAK TERDAFTAR -->
+        <div id="subtemplate-nowa" class="template-container-grid hidden">
+          
+          <!-- LEFT COLUMN: FORM INPUT NO WA TIDAK TERDAFTAR -->
+          <div class="template-form-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-sliders text-red"></i> Form Isian No WA Tidak Terdaftar</h3>
+              <span class="tag-badge-pill">Template #4</span>
+            </div>
+
+            <form id="nowa-form" onsubmit="event.preventDefault(); updateNoWAPreview();">
+              
+              <!-- Role & Source Dropdowns -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-user-shield"></i> Peran Staff</label>
+                  <select id="nowa-role" class="form-select" onchange="updateNoWAPreview()">
+                    <option value="SPRINTER" selected>SPRINTER</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </select>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-people-arrows text-blue"></i> Sumber Nomor (Dapat Dari mana)</label>
+                  <select id="nowa-source-select" class="form-select" onchange="toggleNoWAOtherSourceInput(); updateNoWAPreview();">
+                    <option value="ORANG RUMAH" selected>ORANG RUMAH</option>
+                    <option value="TETANGGA">TETANGGA</option>
+                    <option value="KARYAWAN KANTOR">KARYAWAN KANTOR</option>
+                    <option value="SECURITY">SECURITY</option>
+                    <option value="lainnya">Lainnya (Isi Sendiri...)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Custom Source Input (Hidden by default) -->
+              <div id="nowa-other-source-wrap" class="control-group hidden" style="margin-bottom: 14px;">
+                <label class="control-label"><i class="fa-solid fa-pen-to-square text-blue"></i> Tuliskan Sumber Nomor Lainnya</label>
+                <input type="text" id="nowa-other-source-input" class="slide-title-input" placeholder="misal: SAUDARA / TEMAN KERJA" oninput="updateNoWAPreview()">
+              </div>
+
+              <!-- Inactive Phone & Active Phone Fields -->
+              <div class="form-row-2">
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-phone-slash text-red"></i> No. Tidak Aktif (Di Paket)</label>
+                  <input type="tel" id="nowa-inactive-phone" class="slide-title-input" placeholder="misal: 089527751146" oninput="updateNoWAPreview()">
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"><i class="fa-solid fa-phone text-green"></i> No. Aktif (Tujuan Chat)</label>
+                  <input type="tel" id="nowa-active-phone" class="slide-title-input" placeholder="misal: 087840343368 / +62878..." oninput="updateNoWAPreview()">
+                </div>
+              </div>
+
+              <!-- Customer Name -->
+              <div class="control-group" style="margin-bottom: 16px;">
+                <label class="control-label"><i class="fa-solid fa-user text-blue"></i> Nama Customer (a/n)</label>
+                <input type="text" id="nowa-customer-name" class="slide-title-input" placeholder="misal: Budi / Ibu Rina" oninput="updateNoWAPreview()">
+              </div>
+
+              <button type="button" class="btn btn-primary-red" style="width: 100%; justify-content: center; margin-top: 8px;" onclick="shareNoWAWhatsApp()">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Kirim Ke WhatsApp Customer
+              </button>
+
+            </form>
+          </div>
+
+          <!-- RIGHT COLUMN: PREVIEW RESULT TEXTAREA -->
+          <div class="template-preview-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-eye text-blue"></i> PREVIEW PESAN NO WA TIDAK TERDAFTAR</h3>
+              <span class="preview-status-pill"><i class="fa-solid fa-circle-check text-green"></i> Siap Kirim</span>
+            </div>
+
+            <div class="message-preview-textarea-wrap">
+              <textarea id="nowa-result-text" class="ptmp-textarea" readonly rows="10" placeholder="Hasil format pesan No WA Tidak Terdaftar akan muncul di sini..."></textarea>
+            </div>
+
+            <div class="preview-actions-bar">
+              <button class="btn btn-primary-blue" style="flex:1;" onclick="copyNoWAText()">
+                <i class="fa-solid fa-copy"></i> 📋 Salin Pesan
+              </button>
+              <button class="btn btn-whatsapp" style="flex:1;" onclick="shareNoWAWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> 💬 Kirim WhatsApp
+              </button>
+            </div>
+
+            <div class="smart-logic-hint">
+              <i class="fa-solid fa-circle-info text-blue"></i>
+              <span><b>Logika No WA:</b> Format kalimat otomatis mengarahkan ke nomor HP aktif customer.</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW 5: PENGATURAN SISTEM & INFORMASI VERSI -->
+      <section id="settings-view" class="view-section">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title"><i class="fa-solid fa-gear text-red"></i> <span data-i18n="settings_main_title">Pengaturan Sistem & Informasi Versi</span></h2>
+            <p class="section-subtitle" data-i18n="settings_main_subtitle">Kelola preference otomatisasi cabang, staff, dan lihat informasi versi aplikasi.</p>
+          </div>
+        </div>
+
+        <div class="settings-container-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1000px;">
+          
+          <!-- CARD 1: INFORMASI VERSI APLIKASI (DIPINDAHKAN DARI HALAMAN DEPAN) -->
+          <div class="glass-panel" style="padding: 24px; border-radius: 20px;">
+            <div class="panel-header" style="margin-bottom: 16px; border-bottom: 1px solid var(--glass-border-subtle); padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <h3><i class="fa-solid fa-code-branch text-red"></i> Informasi Versi Sistem</h3>
+              <span class="badge-pill badge-glass">Release Stable</span>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; align-items: center; gap: 16px; background: rgba(230, 0, 18, 0.06); padding: 16px; border-radius: 16px; border: 1px solid rgba(230, 0, 18, 0.15);">
+                <div style="width: 52px; height: 52px; background: var(--jt-red-gradient); border-radius: 14px; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 900;">
+                  v2.0
+                </div>
+                <div>
+                  <h4 style="margin:0; font-size: 1.1rem; color: var(--text-primary);">Versi 2.0 J&T Express KS_Tubun</h4>
+                  <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: var(--text-secondary);">Operational Helper System & Image Portal</p>
+                </div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem;">
+                <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--glass-border-subtle);">
+                  <span style="color: var(--text-secondary);"><i class="fa-solid fa-circle-dot text-green"></i> Status Sistem:</span>
+                  <strong style="color: var(--accent-green);">🟢 Siap & Operasional</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--glass-border-subtle);">
+                  <span style="color: var(--text-secondary);"><i class="fa-solid fa-microchip text-blue"></i> Platform Engine:</span>
+                  <strong style="color: var(--text-primary);">Antigravity Ultra-Fast Web App</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--glass-border-subtle);">
+                  <span style="color: var(--text-secondary);"><i class="fa-solid fa-floppy-disk text-orange"></i> Penyimpanan Preference:</span>
+                  <strong style="color: var(--text-primary);">Auto-Save Browser Storage</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2: PREFERENCE AUTO-SAVE CABANG & STAFF -->
+          <div class="glass-panel" style="padding: 24px; border-radius: 20px;">
+            <div class="panel-header" style="margin-bottom: 16px; border-bottom: 1px solid var(--glass-border-subtle); padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <h3><i class="fa-solid fa-user-gear text-blue"></i> Preference Staff & Cabang</h3>
+              <span class="badge-pill badge-glass">Auto-Save</span>
+            </div>
+
+            <form onsubmit="event.preventDefault(); saveSettingsFromPage();">
+              <div class="control-group" style="margin-bottom: 14px;">
+                <label class="control-label"><i class="fa-solid fa-building-flag text-red"></i> Nama Cabang Drop Point Default</label>
+                <input type="text" id="settings-branch-name" class="slide-title-input" placeholder="misal: KS Tubun">
+              </div>
+
+              <div class="control-group" style="margin-bottom: 14px;">
+                <label class="control-label"><i class="fa-solid fa-city text-red"></i> Nama Kota DP Default</label>
+                <input type="text" id="settings-city-name" class="slide-title-input" placeholder="misal: Samarinda">
+              </div>
+
+              <div class="control-group" style="margin-bottom: 16px;">
+                <label class="control-label"><i class="fa-solid fa-user text-blue"></i> Nama Admin / Kurir Default</label>
+                <input type="text" id="settings-staff-name" class="slide-title-input" placeholder="misal: Imam">
+              </div>
+
+              <button type="submit" class="btn btn-primary-red" style="width: 100%; justify-content: center;">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan Preference Browser
+              </button>
+            </form>
+          </div>
+
+          <!-- CARD 3: MODE TEMA TAMPILAN (DIPINDAHKAN DARI DOCK BAWAH) -->
+          <div class="glass-panel" style="padding: 24px; border-radius: 20px;">
+            <div class="panel-header" style="margin-bottom: 16px; border-bottom: 1px solid var(--glass-border-subtle); padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <h3><i class="fa-solid fa-circle-half-stroke text-red"></i> <span data-i18n="settings_theme_title">Mode Tema Tampilan</span></h3>
+              <span id="settings-theme-status-tag" class="badge-pill badge-glass">Mode Terang Active</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);" data-i18n="settings_theme_desc">
+                Pilih mode tema tampilan layar yang nyaman untuk mata saat bekerja di siang maupun malam hari:
+              </p>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px;">
+                <button id="theme-btn-light" type="button" class="template-tab-btn active" style="width: 100%; justify-content: center; padding: 14px;" onclick="applyThemeMode('light'); showToast('☀️ Mode Terang diaktifkan!', 'info');">
+                  <i class="fa-solid fa-sun text-yellow"></i> ☀️ Mode Terang
+                </button>
+
+                <button id="theme-btn-dark" type="button" class="template-tab-btn" style="width: 100%; justify-content: center; padding: 14px;" onclick="applyThemeMode('dark'); showToast('🌙 Mode Gelap diaktifkan!', 'info');">
+                  <i class="fa-solid fa-moon text-blue"></i> 🌙 Mode Gelap
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4: PILIHAN BAHASA / LANGUAGE SELECTION -->
+          <div class="glass-panel" style="padding: 24px; border-radius: 20px;">
+            <div class="panel-header" style="margin-bottom: 16px; border-bottom: 1px solid var(--glass-border-subtle); padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <h3><i class="fa-solid fa-language text-red"></i> <span data-i18n="lang_card_title">Pilihan Bahasa / Language</span></h3>
+              <span id="settings-lang-status-tag" class="badge-pill badge-glass">🇮🇩 Indonesian</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);" data-i18n="lang_card_desc">
+                Pilih bahasa pengantar sistem operasional (Bahasa Indonesia / English):
+              </p>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px;">
+                <button id="lang-btn-id" type="button" class="template-tab-btn active" style="width: 100%; justify-content: center; padding: 14px;" onclick="setLanguage('id')">
+                  🇮🇩 Bahasa Indonesia (ID)
+                </button>
+
+                <button id="lang-btn-en" type="button" class="template-tab-btn" style="width: 100%; justify-content: center; padding: 14px;" onclick="setLanguage('en')">
+                  🇬🇧 English (EN)
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FLOATING BOTTOM PILL NAVBAR DOCK -->
+  <div class="bottom-pill-nav-container">
+    <nav class="bottom-pill-nav">
+      <button id="mobile-nav-dashboard" class="pill-nav-item active" onclick="switchView('dashboard')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-house"></i></div>
+        <span data-i18n="nav_dashboard">Beranda</span>
+      </button>
+      <button id="mobile-nav-merge" class="pill-nav-item" onclick="switchView('merge')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-images"></i></div>
+        <span data-i18n="nav_merge">Gabung Foto</span>
+      </button>
+      <button id="mobile-nav-upload" class="pill-nav-item" onclick="switchView('upload')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+        <span data-i18n="nav_upload">Upload Link</span>
+      </button>
+      <button id="mobile-nav-template" class="pill-nav-item" onclick="switchView('template')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-file-signature"></i></div>
+        <span data-i18n="nav_template">Template Kerja</span>
+      </button>
+      <button id="mobile-nav-settings" class="pill-nav-item" onclick="switchView('settings')">
+        <div class="pill-nav-icon"><i class="fa-solid fa-gear"></i></div>
+        <span data-i18n="nav_settings">Pengaturan</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- LIGHTBOX MODAL FOR HIGH-RES INSPECTION -->
+  <div id="lightbox-modal" class="modal-overlay" onclick="closeLightbox(event)">
+    <div class="modal-content glass-panel" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modal-slide-title"><i class="fa-solid fa-expand text-red"></i> Pratinjau Canvas High-Res</h3>
+        <button class="modal-close-btn" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-image-preview" src="" alt="High Res Canvas Preview">
+      </div>
+      <div class="modal-footer">
+        <button id="modal-wa-btn" class="btn btn-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i> Share WhatsApp
+        </button>
+        <button id="modal-download-btn" class="btn btn-primary-red">
+          <i class="fa-solid fa-download"></i> Unduh Slide Ini
+        </button>
+        <button class="btn btn-secondary" onclick="closeLightbox()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PENGATURAN GABUNG FOTO -->
+  <div id="merge-settings-modal" class="modal-overlay" onclick="closeMergeSettingsModal(event)">
+    <div class="modal-content glass-panel" style="max-width: 520px; border-radius: 24px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-sliders text-red"></i> Pengaturan Gabung Foto</h3>
+        <button class="modal-close-btn" onclick="closeMergeSettingsModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body modal-body-settings">
+        
+        <!-- Output Format & Quality -->
+        <div class="control-group">
+          <label class="control-label">Format Output Gambar</label>
+          <div class="button-group-toggle">
+            <button id="fmt-jpg" class="toggle-btn active" type="button" onclick="setExportFormat('jpg')">JPG / JPEG</button>
+            <button id="fmt-png" class="toggle-btn" type="button" onclick="setExportFormat('png')">PNG</button>
+          </div>
+        </div>
+
+        <div id="quality-slider-group" class="control-group">
+          <div class="label-with-value">
+            <label for="jpg-quality">Kualitas Gambar JPG</label>
+            <span id="jpg-quality-val" class="val-badge">90%</span>
+          </div>
+          <input type="range" id="jpg-quality" min="50" max="100" value="90" oninput="updateGlobalConfig()">
+        </div>
+
+        <!-- Resolution -->
+        <div class="control-group">
+          <label for="canvas-resolution" class="control-label">Maksimal Resolusi Canvas</label>
+          <select id="canvas-resolution" class="form-select" onchange="updateGlobalConfig()">
+            <option value="1920">Full HD (1920px Standard)</option>
+            <option value="2560">2K QHD (2560px Tajam)</option>
+            <option value="1280">HD (1280px Ringan)</option>
+          </select>
+        </div>
+
+        <!-- Watermark Controls -->
+        <div class="control-group">
+          <div class="checkbox-row">
+            <input type="checkbox" id="show-watermark" checked onchange="updateGlobalConfig()">
+            <label for="show-watermark">Watermark Brand J&T Express</label>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="checkbox-row">
+            <input type="checkbox" id="show-timestamp" checked onchange="updateGlobalConfig()">
+            <label for="show-timestamp">Stempel Waktu Real-Time WITA</label>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="watermark-pos" class="control-label">Posisi Watermark</label>
+          <select id="watermark-pos" class="form-select" onchange="updateGlobalConfig()">
+            <option value="bottom-right">Kanan Bawah</option>
+            <option value="bottom-left">Kiri Bawah</option>
+            <option value="top-right">Kanan Atas</option>
+            <option value="top-left">Kiri Atas</option>
+          </select>
+        </div>
+
+        <!-- Gap Slider -->
+        <div class="control-group">
+          <div class="label-with-value">
+            <label for="grid-gap">Jarak Antar Foto (Gap)</label>
+            <span id="grid-gap-val" class="val-badge">12px</span>
+          </div>
+          <input type="range" id="grid-gap" min="0" max="30" value="12" oninput="updateGlobalConfig()">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary-red" style="width:100%;" onclick="closeMergeSettingsModal()">
+          <i class="fa-solid fa-check"></i> Simpan & Terapkan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL BANTUAN & FAQ PENGGUNAAN APLIKASI -->
+  <div id="faq-help-modal" class="modal-overlay" onclick="closeFaqModal(event)">
+    <div class="modal-content glass-panel" style="max-width: 680px; border-radius: 24px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-circle-question text-red"></i> Panduan & FAQ Penggunaan Aplikasi</h3>
+        <button class="modal-close-btn" onclick="closeFaqModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body modal-body-settings" style="gap: 14px;">
+        
+        <div style="background: rgba(230, 0, 18, 0.05); padding: 14px 18px; border-radius: 16px; border: 1px solid rgba(230, 0, 18, 0.15); display: flex; align-items: center; gap: 14px;">
+          <i class="fa-solid fa-circle-info text-red" style="font-size: 1.5rem;"></i>
+          <div>
+            <strong style="color: var(--text-primary);">Pusat Bantuan Operasional J&T Express</strong>
+            <p style="margin: 2px 0 0 0; font-size: 0.82rem; color: var(--text-secondary);">Panduan praktis penggunaan fitur portal foto dan otomasi pesan.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 1 -->
+        <details class="faq-item" style="background: var(--bg-card); border: 1px solid var(--glass-border-subtle); border-radius: 14px; padding: 12px 16px; cursor: pointer;" open>
+          <summary style="font-weight: 700; color: var(--text-primary); outline: none;">
+            <i class="fa-solid fa-layer-group text-red" style="margin-right: 8px;"></i> 1. Cara Menggunakan "Gabung Foto Multi-Slide & Share WA"
+          </summary>
+          <div style="margin-top: 10px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; padding-top: 8px; border-top: 1px dashed var(--glass-border-subtle);">
+            1. Buka menu <b>Gabung Foto</b>.<br>
+            2. Pilih layout kolase (Maksimal 5 foto per slide).<br>
+            3. Upload foto atau langsung tempel dari clipboard (<b>Ctrl + V</b>).<br>
+            4. Klik <b>💬 Share Semua Foto</b> untuk mengunggah semua slide foto secara online dan otomatis membuka WhatsApp sekaligus dengan link gambar lengkap.<br>
+            5. Atau klik <b>Unduh Semua Slide (ZIP)</b> untuk mengunduh semua foto dalam satu file ZIP ringkas.
+          </div>
+        </details>
+
+        <!-- FAQ Item 2 -->
+        <details class="faq-item" style="background: var(--bg-card); border: 1px solid var(--glass-border-subtle); border-radius: 14px; padding: 12px 16px; cursor: pointer;">
+          <summary style="font-weight: 700; color: var(--text-primary); outline: none;">
+            <i class="fa-solid fa-cloud-arrow-up text-blue" style="margin-right: 8px;"></i> 2. Cara Menggunakan "Upload Foto Jadi Link Online"
+          </summary>
+          <div style="margin-top: 10px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; padding-top: 8px; border-top: 1px dashed var(--glass-border-subtle);">
+            1. Buka menu <b>Upload Link</b>.<br>
+            2. Klik area dropzone atau tekan <b>Ctrl + V</b> di mana saja.<br>
+            3. Foto diunggah ke cloud publik dan langsung menghasilkan <b>URL Link Gambar</b>.<br>
+            4. Klik <b>📋 Salin Link</b> atau <b>💬 WhatsApp Share</b> untuk membagikan ke customer.
+          </div>
+        </details>
+
+        <!-- FAQ Item 3 -->
+        <details class="faq-item" style="background: var(--bg-card); border: 1px solid var(--glass-border-subtle); border-radius: 14px; padding: 12px 16px; cursor: pointer;">
+          <summary style="font-weight: 700; color: var(--text-primary); outline: none;">
+            <i class="fa-solid fa-file-signature text-green" style="margin-right: 8px;"></i> 3. Panduan Lengkap 4 Template Kerja Operasional
+          </summary>
+          <div style="margin-top: 10px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; padding-top: 8px; border-top: 1px dashed var(--glass-border-subtle);">
+            Tersedia 4 pilihan template kerja otomatis:<br>
+            • <b>1. PTMP Standard</b>: Konfirmasi paket salah antar yang sudah diantarkan kembali.<br>
+            • <b>2. PTMP Returan</b>: Konfirmasi paket returan toko yang diterima oleh karyawan/penerima.<br>
+            • <b>3. POD Cancel Order</b>: Konfirmasi pembatalan order (salah detail, tunggu sprinter, dll) & nama kota opsional.<br>
+            • <b>4. No WA Tidak Terdaftar</b>: Konfirmasi nomor aktif pengganti (dapat dari tetangga, orang rumah, dll).<br><br>
+            💡 <i>Catatan Format:</i> Nomor diawali <code>08...</code> otomatis terkonversi menjadi <code>+628...</code> tanpa kurung. Isian Nama Cabang, Peran Staff, Sumber Nomor, dan Nama Customer otomatis tampil <b>Cetak Tebal (*BOLD*)</b> di WhatsApp!
+          </div>
+        </details>
+
+        <!-- FAQ Item 4 -->
+        <details class="faq-item" style="background: var(--bg-card); border: 1px solid var(--glass-border-subtle); border-radius: 14px; padding: 12px 16px; cursor: pointer;">
+          <summary style="font-weight: 700; color: var(--text-primary); outline: none;">
+            <i class="fa-solid fa-language text-purple" style="margin-right: 8px;"></i> 4. Pilihan Bahasa & Mode Tampilan Gelap/Terang
+          </summary>
+          <div style="margin-top: 10px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; padding-top: 8px; border-top: 1px dashed var(--glass-border-subtle);">
+            • Buka menu <b>Pengaturan</b> untuk beralih antara <b>🇮🇩 Bahasa Indonesia</b> atau <b>🇬🇧 English</b>.<br>
+            • Anda juga dapat mengganti mode tema (<b>☀️ Terang</b> / <b>🌙 Gelap</b>) yang otomatis tersimpan di HP/PC Anda.
+          </div>
+        </details>
+
+        <!-- FAQ Item 5 -->
+        <details class="faq-item" style="background: var(--bg-card); border: 1px solid var(--glass-border-subtle); border-radius: 14px; padding: 12px 16px; cursor: pointer;">
+          <summary style="font-weight: 700; color: var(--text-primary); outline: none;">
+            <i class="fa-solid fa-floppy-disk text-orange" style="margin-right: 8px;"></i> 5. Fitur Auto-Save & Penggunaan Di Smartphone / HP
+          </summary>
+          <div style="margin-top: 10px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; padding-top: 8px; border-top: 1px dashed var(--glass-border-subtle);">
+            <b>Ya!</b> Nama Cabang, Nama Kota, dan Nama Admin/Kurir tersimpan otomatis (<i>Auto-Save</i>). Tampilan portal di HP telah dirancang ultra-minimalis dengan ukuran tombol jempol presisi agar cepat dan nyaman digunakan saat di lapangan.
+          </div>
+        </details>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary-red" style="width:100%;" onclick="closeFaqModal()">
+          <i class="fa-solid fa-check"></i> Mengerti & Tutup Panduan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- External CDN Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <!-- App Script -->
+  <script src="app.js"></script>
+</body>
+</html>
